@@ -1,19 +1,20 @@
 import ResturantCard from "./ResturantCard";
 import useBody from "../hooks/useBody";
-import { useEffect, useState } from "react";
+import { use, useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import useOnlineStatus from "../hooks/useOnlineStatus";
 import DiscountedResCard from "./DiscountedResCard";
 import ShimmerResCard from "./ShimmerResCard";
+import userContext from "../Utils/userContext";
 function Body() {
   const restaurantList = useBody(); 
   const [filteredRestaurants, setFilteredRestaurants] = useState([]);
   const [searchVal,setSearchVal]=useState("");
   const onlineStatus=useOnlineStatus();
+ const {username,setUsername}=useContext(userContext)
   useEffect(()=>{
     setFilteredRestaurants(restaurantList);
   },[restaurantList])
-
   const resWithDiscount=restaurantList.filter(
     (restaurant) => restaurant.info.aggregatedDiscountInfoV3
   )
@@ -24,7 +25,7 @@ function Body() {
     <div className="body">
       <div className="flex  m-4 p-4 items-center">
           <div className="m-4 p-4">
-            <input  className="border border-black" type="text" placeholder="Search" value={searchVal} onChange={(e)=>{
+            <input  className="border border-black m-2 p-2" type="text" placeholder="Search" value={searchVal} onChange={(e)=>{
               const userInput=e.target.value
               setSearchVal(userInput);
               const searchItem=restaurantList.filter((restaurant)=>{
@@ -46,6 +47,21 @@ function Body() {
           >
           Top Rated Restaurants
           </button>
+          </div>
+          <div>
+            <input className="border border-black m-2 p-2" type="text" placeholder="User" value={username}
+            onChange={(e)=>{
+              const userInput=e.target.value;
+              setUsername(userInput)
+            }}/>
+          </div>
+          <div>
+            <button className="refresh-btn px-2 py-2 bg-green-400 text-white rounded-lg" 
+            onClick={()=>{
+              setFilteredRestaurants(restaurantList)
+            }}>
+              Refresh
+            </button>
           </div>
       </div>
 

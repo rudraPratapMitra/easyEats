@@ -8,7 +8,6 @@ import { CiClock2,CiLocationOn  } from "react-icons/ci";
 function ResturantInfo() {
     const { resId } = useParams();////----------->usePARAMS
     const resInfo = useResInfo(resId);
-    console.log(resInfo)
     if (!resInfo) return <ShimmerResCard/>//---->shimmer ui
     const restaurant=resInfo?.data?.cards[2]?.card?.card?.info;
    const allCards = resInfo?.data?.cards?.find(

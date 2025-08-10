@@ -1,11 +1,27 @@
 import { FaAngleDown } from "react-icons/fa";
 import { useState } from "react";
+import { useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
+import { addItems, incrementItems, decrementItems } from "../Utils/cartSlice";////this
 
 function CategorySection({ categoryData }) {
   const { title, itemCards } = categoryData.card.card;
 
   if (!itemCards || itemCards.length === 0) return null;
   const [isOpen,setIsOpen]=useState(true)
+  // const[countObject,setCounts]=useState(0);
+  const cartObject = useSelector((state) => state.cart.items);
+
+  const dispatch=useDispatch();
+  const handleAdd=(id)=>{
+    dispatch(addItems({id}))
+  }
+  const handleIncrement =(id)=>{
+    dispatch(incrementItems({id}))
+  }
+  const handleDecrement = (id) => {
+    dispatch(decrementItems({id}));
+  };
 
   return (
     <div className="mb-6 text-center">
@@ -25,6 +41,7 @@ function CategorySection({ categoryData }) {
           const info = itemCard.card.info;
           const imageId = info.imageId;
           const price = (info.price || info.defaultPrice) / 100;
+          const count=cartObject[info.id]||0;
 
           return (
             <div
@@ -53,9 +70,24 @@ function CategorySection({ categoryData }) {
                   No image
                 </div>
               )}
-              <button className="absolute bottom-2 px-3 py-1  text-green-600 border bg-white rounded-md shadow-sm hover:bg-gray-200 font-medium">
-                 + Add
+              
+              {count===0 ?(
+              <button className="absolute bottom-2 px-3 py-1  text-green-600 border bg-white rounded-md shadow-sm hover:bg-gray-200 font-medium" 
+                onClick={()=>handleAdd(info.id)}>
+                Add
              </button>
+              ):<div className="absolute bottom-2 flex items-center border bg-white rounded-md shadow-sm">
+                <button className="px-2 py-2 text-red-500 bg-white rounded-md shadow-sm  hover:bg-gray-200 font-medium" 
+                  onClick={()=>handleDecrement(info.id)}>
+                  -
+                </button>
+                {count}
+                <button className="px-2 py-2 text-green-500  bg-white rounded-md shadow-sm  hover:bg-gray-200 font-medium" 
+                  onClick={()=>handleIncrement(info.id)}>
+                  + 
+                </button>
+              </div>
+              }
               </div>
               
             </div>

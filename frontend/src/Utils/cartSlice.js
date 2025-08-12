@@ -6,20 +6,26 @@ const cartSlice=createSlice({
     },
     reducers:{
         addItems:(state,action)=>{
-           const {id}=action.payload;
-           if(!state.items[id]){
-            state.items[id]=1;
+            const itemDetail=action.payload;
+            const {id}=action.payload;
+            if(!state.items[id]){
+            // state.items[id]=1;
+            state.items[id] = { ...itemDetail, quantity: 1 };
            }
         },
         incrementItems:(state,action)=>{
             const {id}=action.payload
-            state.items[id]=(state.items[id]||0)+1;
+            if(state.items[id]){
+                state.items[id].quantity += 1;
+            }
+           
         },
-        decrementItems:(state,action)=>{
-            const {id}=action.payload;
-            if(state.items[id]>1){
-                state.items[id]=state.items[id]-1;
-            }else{
+       decrementItems: (state, action) => {
+            const { id } = action.payload;
+            if (!state.items[id]) return;
+            if (state.items[id].quantity > 1) {
+                state.items[id].quantity -= 1;
+            } else {
                 delete state.items[id];
             }
         },

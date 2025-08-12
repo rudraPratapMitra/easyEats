@@ -8,8 +8,8 @@ function Header(){
     const [isloggedIn,setBtnName]=useState(false)
     const onlineStatus=useOnlineStatus();
     const user=useContext(userContext);
-    const cartObject=useSelector((store)=>store.cart.items)
-    const totalItems = Object.values(cartObject).reduce((acc, qty) => acc + qty, 0);
+    const cartObject=useSelector((state)=>state.cart.items)
+    const totalItems = Object.values(cartObject).reduce((acc, i) => acc + (i?.quantity||0), 0);
 
     return (
         <div className="flex justify-between bg-orange-300 shadow-sm mb-5 "> 
@@ -28,8 +28,10 @@ function Header(){
                     <li className="py-2 px-2"><Link to="/contact">Contact Us</Link></li>
                     {/* <li className="py-2 px-2"><FaShoppingCart className="text-xl" /></li> */}
                     <li className="py-2 px-2 flex items-center">
-                        <FaShoppingCart className="text-xl" />
-                        <span className="ml-1">{totalItems}</span>
+                        <Link to="/cart" className="flex">
+                            <FaShoppingCart className="text-xl" />
+                            <span className="ml-1">{totalItems}</span>
+                        </Link>
                     </li>
                     {/* <li className="py-2 px-2">
                         <button onClick={() => setBtnName(!isloggedIn)}>

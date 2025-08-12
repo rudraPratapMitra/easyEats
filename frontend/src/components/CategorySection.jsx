@@ -13,13 +13,13 @@ function CategorySection({ categoryData }) {
   const cartObject = useSelector((state) => state.cart.items);
 
   const dispatch=useDispatch();
-  const handleAdd=(id)=>{
-    dispatch(addItems({id}))
+  const handleAdd=(info)=>{
+    dispatch(addItems(info))
   }
-  const handleIncrement =(id)=>{
+  const handleIncrement =({id})=>{
     dispatch(incrementItems({id}))
   }
-  const handleDecrement = (id) => {
+  const handleDecrement = ({id}) => {
     dispatch(decrementItems({id}));
   };
 
@@ -41,7 +41,7 @@ function CategorySection({ categoryData }) {
           const info = itemCard.card.info;
           const imageId = info.imageId;
           const price = (info.price || info.defaultPrice) / 100;
-          const count=cartObject[info.id]||0;
+          const count=cartObject[info.id]?.quantity||0;
 
           return (
             <div
@@ -73,7 +73,7 @@ function CategorySection({ categoryData }) {
               
               {count===0 ?(
               <button className="absolute bottom-2 px-3 py-1  text-green-600 border bg-white rounded-md shadow-sm hover:bg-gray-200 font-medium" 
-                onClick={()=>handleAdd(info.id)}>
+                onClick={()=>handleAdd(info)}>
                 Add
              </button>
               ):<div className="absolute bottom-2 flex items-center border bg-white rounded-md shadow-sm">

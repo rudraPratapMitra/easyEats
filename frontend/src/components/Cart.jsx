@@ -1,5 +1,6 @@
 import { useSelector, useDispatch } from "react-redux";
 import { incrementItems, decrementItems, clearCart } from "../Utils/cartSlice";
+import { Link } from "react-router-dom";
 
 function Cart() {
     const dispatch = useDispatch();
@@ -24,6 +25,11 @@ function Cart() {
                         className="w-64 h-64 object-contain"
                     />
                     <p className="text-3xl font-semibold text-gray-600">Your cart is empty</p>
+                     <Link to="/">
+                    <button className="p-4 m-4 bg-blue-400 text-white rounded-lg hover:bg-blue-500">
+                        Go to Restaurants
+                    </button>
+                    </Link>
                 </div>
             ) : (
                 <div>

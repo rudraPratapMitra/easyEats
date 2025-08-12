@@ -1,14 +1,14 @@
 import useResInfo from "../hooks/useResInfo";
 import { useParams } from "react-router-dom";
 import CategorySection from "./CategorySection";
-import ShimmerResCard from "./ShimmerResCard";
+import ResInfoShimmer from "./ResInfoShimmer";
 import { FaStar } from "react-icons/fa";
 import { CiClock2,CiLocationOn  } from "react-icons/ci";
 
 function ResturantInfo() {
     const { resId } = useParams();////----------->usePARAMS
     const resInfo = useResInfo(resId);
-    if (!resInfo) return <ShimmerResCard/>//---->shimmer ui
+    if (!resInfo) return <ResInfoShimmer/>//---->shimmer ui
     const restaurant=resInfo?.data?.cards[2]?.card?.card?.info;
    const allCards = resInfo?.data?.cards?.find(
   (card) => card?.groupedCard?.cardGroupMap?.REGULAR

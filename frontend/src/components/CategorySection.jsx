@@ -16,10 +16,10 @@ function CategorySection({ categoryData }) {
   const handleAdd=(info)=>{
     dispatch(addItems(info))
   }
-  const handleIncrement =({id})=>{
+  const handleIncrement =(id)=>{
     dispatch(incrementItems({id}))
   }
-  const handleDecrement = ({id}) => {
+  const handleDecrement = (id) => {
     dispatch(decrementItems({id}));
   };
 

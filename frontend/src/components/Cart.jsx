@@ -10,7 +10,7 @@ function Cart() {
     const cartArray = Object.values(cartObject); // [{id, name, image, price, quantity}, ...]
 
     const totalPrice = cartArray.reduce(
-        (acc, item) => acc + item.price * item.quantity,
+        (acc, item) => acc + item.price||item.defaultPrice * item.quantity,
         0
     );
 
@@ -49,7 +49,7 @@ function Cart() {
                                     <div>
                                         <h2 className="font-semibold">{item.name}</h2>
                                         <p className="text-sm text-gray-500">
-                                            ₹{item.price/100} each
+                                            ₹{item.price||item.defaultPrice/100} each
                                         </p>
                                     </div>
                                 </div>
